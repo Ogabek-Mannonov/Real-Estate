@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { Home, Sun, Wind, Briefcase, DollarSign, Ruler, Building2, Phone } from 'lucide-react';
 import './index.css';
 
 function App() {
+  const servicesCarouselRef = useRef(null);
+  const teamCarouselRef = useRef(null);
+
+  const scrollServices = (direction) => {
+    if (servicesCarouselRef.current) {
+      const scrollAmount = 380;
+      servicesCarouselRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  const scrollTeam = (direction) => {
+    if (teamCarouselRef.current) {
+      const scrollAmount = 300;
+      teamCarouselRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="app-container">
       {/* --- NAVBAR --- */}
@@ -22,9 +40,7 @@ function App() {
             <a href="#news">NEWS</a>
           </nav>
           <div className="nav-contact">
-            <div className="contact-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            </div>
+            <div className="contact-icon-yellow"><Phone size={20} /></div>
             <div className="contact-info">
               <span className="contact-title">Call Anytime</span>
               <span className="contact-phone">017-50050088</span>
@@ -58,23 +74,23 @@ function App() {
         {/* --- FEATURES SECTION --- */}
         <section className="features container" id="features">
            <div className="feature-card">
-              <div className="feature-icon">🏠</div>
+              <div className="feature-icon"><Home size={32} strokeWidth={1.5} /></div>
               <h3>Smart Home System</h3>
            </div>
            <div className="feature-card">
-              <div className="feature-icon">☀️</div>
+              <div className="feature-icon"><Sun size={32} strokeWidth={1.5} /></div>
               <h3>Solar Energy Panels</h3>
            </div>
            <div className="feature-card">
-              <div className="feature-icon">❄️</div>
+              <div className="feature-icon"><Wind size={32} strokeWidth={1.5} /></div>
               <h3>Central Air Conditioning</h3>
            </div>
            <div className="feature-card">
-              <div className="feature-icon">💼</div>
+              <div className="feature-icon"><Briefcase size={32} strokeWidth={1.5} /></div>
               <h3>Investment Consulting</h3>
            </div>
            <div className="feature-card">
-              <div className="feature-icon">💰</div>
+              <div className="feature-icon"><DollarSign size={32} strokeWidth={1.5} /></div>
               <h3>Reasonable Price</h3>
            </div>
         </section>
@@ -101,14 +117,14 @@ function App() {
               
               <div className="about-features">
                  <div className="about-feature">
-                    <div className="feature-icon-large">📏</div>
+                    <div className="feature-icon-large"><Ruler size={32} strokeWidth={1.5} /></div>
                     <div>
                        <h4>Creative Solutions</h4>
                        <p>In today's competitive business landscape, the need for efficient IT solutions has been more critical.</p>
                     </div>
                  </div>
                  <div className="about-feature">
-                    <div className="feature-icon-large">🏢</div>
+                    <div className="feature-icon-large"><Building2 size={32} strokeWidth={1.5} /></div>
                     <div>
                        <h4>Actionable Solutions</h4>
                        <p>In today's competitive business landscape, the need for efficient IT solutions has been more critical.</p>
@@ -119,11 +135,11 @@ function App() {
                  <button className="btn-primary">
                    <span className="btn-icon">→</span> Read More
                  </button>
-                 <div className="contact-info row-contact">
-                    <div className="contact-icon bordered">📞</div>
-                    <div>
-                      <span className="contact-title">Call Anytime</span>
-                      <span className="contact-phone-large">+01 7500 500 88</span>
+                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <div className="contact-icon bordered" style={{ width: '45px', height: '45px' }}><Phone size={20} /></div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span className="contact-title" style={{ margin: 0 }}>Call Anytime</span>
+                      <span className="contact-phone-large" style={{ margin: 0 }}>+01 7500 500 88</span>
                     </div>
                  </div>
               </div>
@@ -132,31 +148,56 @@ function App() {
 
         {/* --- SERVICES SECTION --- */}
         <section className="services-section" id="services">
-          <div className="container">
+          <div className="container" style={{ position: 'relative' }}>
              <span className="section-subtitle" style={{color: '#d1ff1a'}}>✦ OUR SERVICES</span>
-             <h2 style={{color: 'white', marginBottom: '40px'}}>Check Out Our Key Services</h2>
+             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
+                <h2 style={{color: 'white', margin: 0}}>Check Out Our Key Services</h2>
+                <div className="carousel-nav" style={{ display: 'flex', gap: '10px' }}>
+                   <button className="nav-btn" onClick={() => scrollServices('left')}>←</button>
+                   <button className="nav-btn" onClick={() => scrollServices('right')}>→</button>
+                </div>
+             </div>
              
-             <div className="services-grid">
+             <div className="services-carousel" ref={servicesCarouselRef}>
+                <div className="service-card active">
+                   <div className="service-number">05</div>
+                   <div className="service-card-icon"><Building2 size={40} strokeWidth={1} /></div>
+                   <h3>Property Rentals Services</h3>
+                   <p>Proin efficitur, mauris vel condimentum pulvinar, velit orci consectetur</p>
+                   <div className="service-img-wrapper">
+                     <div className="service-img" style={{backgroundImage: "url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"}}></div>
+                     <div className="service-img-arrow">↗</div>
+                   </div>
+                </div>
                 <div className="service-card">
                    <div className="service-number">01</div>
-                   <div className="service-card-icon">🏠</div>
+                   <div className="service-card-icon"><Home size={40} strokeWidth={1} /></div>
                    <h3>Projects Management</h3>
                    <p>Proin efficitur, mauris vel condimentum pulvinar, velit orci consectetur</p>
-                   <div className="service-img" style={{backgroundImage: "url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"}}></div>
+                   <div className="service-img-wrapper">
+                     <div className="service-img" style={{backgroundImage: "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"}}></div>
+                     <div className="service-img-arrow">↗</div>
+                   </div>
                 </div>
                 <div className="service-card">
                    <div className="service-number">02</div>
-                   <div className="service-card-icon">📐</div>
+                   <div className="service-card-icon"><Ruler size={40} strokeWidth={1} /></div>
                    <h3>Architecture & Design</h3>
                    <p>Proin efficitur, mauris vel condimentum pulvinar, velit orci consectetur</p>
-                   <div className="service-img" style={{backgroundImage: "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"}}></div>
+                   <div className="service-img-wrapper">
+                     <div className="service-img" style={{backgroundImage: "url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"}}></div>
+                     <div className="service-img-arrow">↗</div>
+                   </div>
                 </div>
                 <div className="service-card">
                    <div className="service-number">03</div>
-                   <div className="service-card-icon">💰</div>
+                   <div className="service-card-icon"><Briefcase size={40} strokeWidth={1} /></div>
                    <h3>Investment & Capital</h3>
                    <p>Proin efficitur, mauris vel condimentum pulvinar, velit orci consectetur</p>
-                   <div className="service-img" style={{backgroundImage: "url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"}}></div>
+                   <div className="service-img-wrapper">
+                     <div className="service-img" style={{backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"}}></div>
+                     <div className="service-img-arrow">↗</div>
+                   </div>
                 </div>
              </div>
           </div>
@@ -247,15 +288,17 @@ function App() {
             <div className="team-header">
               <h2>Get to Know our leader ship team</h2>
               <div className="team-nav">
-                <button className="nav-btn">←</button>
-                <button className="nav-btn">→</button>
+                <button className="nav-btn" onClick={() => scrollTeam('left')}>←</button>
+                <button className="nav-btn" onClick={() => scrollTeam('right')}>→</button>
               </div>
             </div>
-            <div className="team-grid">
+            <div className="team-carousel" ref={teamCarouselRef}>
                <div className="team-card team-1"></div>
                <div className="team-card team-2"></div>
                <div className="team-card team-3"></div>
                <div className="team-card team-4"></div>
+               <div className="team-card team-5"></div>
+               <div className="team-card team-6"></div>
             </div>
           </div>
         </section>
