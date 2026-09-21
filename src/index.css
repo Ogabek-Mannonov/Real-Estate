@@ -90,13 +90,21 @@ p { color: #666; margin-bottom: 15px; }
 .hero {
   position: relative;
   min-height: 85vh;
-  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
   display: flex;
   align-items: center;
   color: white;
+  background-size: cover;
+  background-position: center;
   border-radius: 24px;
   margin: 20px;
   overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+  z-index: 1;
 }
 .hero-content { position: relative; z-index: 10; }
 .hero-badge { position: absolute; top: -120px; left: 0; }
