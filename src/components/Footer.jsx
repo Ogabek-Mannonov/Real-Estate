@@ -14,7 +14,7 @@ const Footer = () => {
              <span>Realest</span>
            </div>
            <h2 style={{color: 'white', fontSize: '2rem'}}>+ (123) 456-7890</h2>
-           <p style={{color: 'white', fontWeight: 'bold', marginBottom: '30px'}}>domain@example.com</p>
+           <p style={{color: 'white', fontWeight: 'bold', marginBottom: '30px'}}>ogabekmannonovv@gmail.com</p>
            <div className="social-links">
               <a href="#"></a>
               <a href="#"></a>
@@ -51,7 +51,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="container footer-bottom">
-         <p>© Copyright Reserved by Company.com</p>
+         <p>© Copyright {new Date().getFullYear()} by Ogabek. All Rights Reserved.</p>
          <div className="footer-bottom-links">
            <Link to="/">Privacy Policy</Link>
            <Link to="/">Term of Service</Link>
